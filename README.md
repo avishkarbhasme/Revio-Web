@@ -53,6 +53,7 @@ Revio is a modern web application for sharing and exploring video content. It al
 ### Prerequisites
 - Node.js v18+  
 - MongoDB (local or cloud)
+- Express.js
 
 ### Backend Setup
 1. Navigate to backend directory:
@@ -81,11 +82,11 @@ Revio is a modern web application for sharing and exploring video content. It al
     ```
 2. Install dependencies:
     ```bash
-    npm install
+    npm install and npm vite
     ```
 3. Start the frontend server:
     ```bash
-    npm start
+    npm run dev
     ```
 
 ---
