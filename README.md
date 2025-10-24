@@ -3,7 +3,7 @@
 Revio is a modern web application for sharing and exploring video content. It allows users to upload videos, interact with content through likes, comments, and reports, and provides an admin panel for moderation and management.
 
 ---
-![Revio Screenshot](assets/revio_screenshot.png)
+![Revio Screenshot](/assets/Screenshot 2025-10-24 115742.png)
 ## Features
 
 ### User Features
