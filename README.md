@@ -8,7 +8,7 @@ Revio is a modern web application for sharing and exploring video content. It al
 ![Revio Screenshot](assets/Screenshot%202025-10-24%20115742.png)
 
 ## Main
-![Revio Screenshot](assets/Screenshot%20202025-10-24%20115830.png)
+![Revio Screenshot](assets/Screenshot%202025-10-24%20115830.png)
 
 ## Video Play
 ![Revio Screenshot](assets/Screenshot%202025-10-24%20115845.png)
