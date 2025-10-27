@@ -1,6 +1,6 @@
 # Revio
 
-Revio is a modern web application for sharing and exploring video content. It allows users to upload videos, interact with content through likes, comments, and reports, and provides an admin panel for moderation and management.
+Built a full-stack MERN application that allows video sharing, playlist creation, likes, comment interactions and user interaction. Integrated JWT authentication, admin panel, and report/support modules. Designed a clean, responsive, modern interface using React and Tailwind CSS, and implemented chatbot assistance to enhance user engagement and utilized MongoDB Atlas for secure cloud data storage along with Cloudinary for efficient image and video management.
 
 ---
 # Screenshots
