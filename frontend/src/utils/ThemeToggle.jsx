@@ -30,7 +30,7 @@ export default function ThemeToggle() {
   }, [dark]);
 
   return (
-    <button onClick={toggleDark} className="p-2 bg-gray-200 cursor-pointer  dark:bg-gray-700 rounded">
+    <button onClick={toggleDark} className="p-2 bg-gray-700 cursor-pointer text-white dark:text-black dark:bg-amber-200 rounded">
       {dark ? "☀ Light" : "🌙 Dark"}
     </button>
   );

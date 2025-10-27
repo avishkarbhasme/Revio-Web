@@ -2,6 +2,7 @@ import React from 'react'
 import UserNavbar from '../components/UserNavbar'
 import Sidebar from '../components/Sidebar'
 import Report from '../components/Support/Report'
+import Chatbot from '../components/chatbot/Chatbot'
 
 function ReportPage() {
   return (
@@ -9,6 +10,7 @@ function ReportPage() {
         <UserNavbar/>
         <Sidebar/>
         <Report/>
+        <Chatbot/>
     </div>
   )
 }

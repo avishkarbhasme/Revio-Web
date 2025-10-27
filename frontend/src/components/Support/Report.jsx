@@ -30,7 +30,7 @@ function Report() {
   };
 
   return (
-    <div className="min-h-screen mt-15 bg-gray-900 p-6 flex justify-center items-start">
+    <div className="min-h-screen mt-15 bg-gray-700 dark:bg-gray-900 p-6 flex justify-center items-start">
       <div className="w-full max-w-lg bg-[#1a1a1a] p-8 rounded-lg border border-gray-700 shadow-lg">
         <h1 className="text-2xl font-bold text-white mb-6 text-center">Report Content</h1>
 

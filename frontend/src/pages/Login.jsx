@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import ThemeToggle from "../utils/ThemeToggle";
+import NonAuthChatbot from "../components/chatbot/NonAuthChatbot";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -84,6 +85,7 @@ function Login() {
           </Link>
         </div>
       </form>
+      <NonAuthChatbot/>
     </div>
     </>
   );

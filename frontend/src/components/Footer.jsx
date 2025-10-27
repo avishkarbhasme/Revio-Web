@@ -12,10 +12,10 @@ const Footer = () => {
           <h2 className="text-xl font-semibold mb-3 text-white">Contact</h2>
           <ul className="space-y-2">
             <li className="flex items-center gap-2">
-              <FaEnvelope /> <span>avishkar.bhasme@gmail.com</span>
+              <FaEnvelope /> <span>timepasstalkies12@gmail.com</span>
             </li>
             <li className="flex items-center gap-2">
-              <FaPhoneAlt /> <span>+91 7385454418</span>
+              <FaPhoneAlt /> <span>+91 7385465418</span>
             </li>
             <li className="flex items-center gap-2">
               <FaMapMarkerAlt /> <span>Tasgaon, Sangli, India</span>

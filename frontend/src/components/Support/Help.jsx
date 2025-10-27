@@ -31,7 +31,7 @@ function Help() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 p-6 flex justify-center">
+    <div className="min-h-screen bg-gray-700 dark:bg-gray-900 p-6 flex justify-center">
       <div className="w-full max-w-3xl space-y-6">
         <h1 className="text-3xl font-bold text-white text-center mb-6">Help & FAQ</h1>
 

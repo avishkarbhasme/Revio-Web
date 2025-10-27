@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import NonAuthChatbot from "./chatbot/NonAuthChatbot";
 
 
 function WelcomeMessage() {
@@ -31,6 +32,7 @@ function WelcomeMessage() {
         </button>{" "}
         and join the fun! Grab some popcorn, get comfy, and let the good times roll!
       </p>
+   
     </div>
   );
 }

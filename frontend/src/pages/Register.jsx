@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import CustomFileInput from "../utils/CustomFileInput";
 import ThemeToggle from "../utils/ThemeToggle";
+import NonAuthChatbot from "../components/chatbot/NonAuthChatbot";
 
 
 function Signup() {
@@ -178,6 +179,7 @@ function Signup() {
           </Link>
         </p>
       </form>
+      <NonAuthChatbot/>
     </div>
     </>
   );

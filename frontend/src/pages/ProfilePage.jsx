@@ -2,6 +2,7 @@ import React from 'react'
 import Sidebar from '../components/Sidebar'
 import ProfileCompo from '../components/ProfileCompo'
 import UserNavbar from '../components/UserNavbar'
+import Chatbot from '../components/chatbot/Chatbot'
 
 function ProfilePage() {
   return (
@@ -9,6 +10,7 @@ function ProfilePage() {
         <UserNavbar/>
         <Sidebar/>
         <ProfileCompo/>
+        <Chatbot/>
     </div>
   )
 }

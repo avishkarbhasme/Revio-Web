@@ -2,6 +2,7 @@ import React from 'react'
 import UserNavbar from '../components/UserNavbar'
 import Sidebar from '../components/Sidebar'
 import EditCompo from '../components/MyProfile/EditCompo.jsx'
+import Chatbot from '../components/chatbot/Chatbot.jsx'
 
 function EditProfilePage() {
   return (
@@ -9,6 +10,7 @@ function EditProfilePage() {
         <UserNavbar/>
         <Sidebar/>
         <EditCompo/>
+        <Chatbot/>
     </div>
   )
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ThemeToggle from "../utils/ThemeToggle";
+import NonAuthChatbot from "../components/chatbot/NonAuthChatbot";
 
 function ForgotPassword() {
   const [username, setUsername] = useState("");
@@ -97,6 +98,7 @@ function ForgotPassword() {
           </Link>
         </div>
       </form>
+      <NonAuthChatbot/>
     </div>
     </>
   );

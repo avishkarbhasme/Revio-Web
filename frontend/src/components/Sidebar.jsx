@@ -32,7 +32,7 @@ const Sidebar = () => {
 const SidebarItem = ({ icon, label, onClick }) => (
   <button
     onClick={onClick}
-    className="flex items-center w-full px-4 py-2 mb-3 border border-gray-200 rounded text-white dark:hover:bg-purple-800 hover:bg-gray-800 transition-colors duration-200"
+    className="flex items-center w-full px-4 py-2 mb-3 border border-gray-200 rounded text-white cursor-pointer dark:hover:bg-purple-800 hover:bg-gray-800 transition-colors duration-200"
   >
     <span className="mr-3 text-lg">{icon}</span>
     <span className="text-md">{label}</span>

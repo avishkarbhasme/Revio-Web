@@ -4,6 +4,7 @@ import axios from "axios";
 import UserNavbar from "../components/UserNavbar.jsx"
 import Sidebar from "../components/Sidebar.jsx"
 import VideoGrid from "../components/VideoGrid.jsx";
+import Chatbot from "../components/chatbot/Chatbot.jsx";
 
 
 
@@ -27,6 +28,7 @@ function Home() {
   <UserNavbar/>
   <Sidebar/>
   <VideoGrid/>
+  <Chatbot/>
   
   </div>
   </>

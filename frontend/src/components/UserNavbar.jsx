@@ -80,7 +80,7 @@ function UserNavbar() {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 w-full dark:bg-black dark:text-gray-100 bg-white shadow-lg flex items-center px-4 h-16 z-50">
+    <nav className="fixed top-0 left-0 w-full dark:bg-black dark:text-gray-100 bg-pink-500 shadow-lg flex items-center px-4 h-16 z-50">
       {/* Logo and name */}
       <div
         onClick={() => navigate("/home")}
@@ -97,7 +97,7 @@ function UserNavbar() {
           placeholder="Search videos..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full max-w-md px-4 py-2 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full max-w-md px-4 py-2 border border-black dark:border-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         {/* Search Results Dropdown (Overlapping main content) */}

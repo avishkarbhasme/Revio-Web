@@ -42,8 +42,8 @@ const LikedVideos = () => {
     );
 
   return (
-    <div className="min-h-screen bg-zinc-600 dark:bg-gray-900 py-10 px-5">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+    <div className="min-h-screen bg-gray-700 dark:bg-gray-900 py-10 px-5">
+      <h1 className="text-3xl text-black font-bold  dark:text-white mb-6 text-center">
         Your Liked Videos
       </h1>
 

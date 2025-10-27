@@ -49,7 +49,7 @@ function Support() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex justify-center items-center p-4">
+    <div className="min-h-screen bg-gray-700 dark:bg-gray-900 flex justify-center items-center p-4">
       <div className="bg-[#1a1a1a] p-8 rounded-lg shadow-lg w-full max-w-lg border border-gray-700">
         <h1 className="text-2xl font-bold text-white mb-6 text-center">
           Support

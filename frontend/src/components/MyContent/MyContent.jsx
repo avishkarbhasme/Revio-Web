@@ -28,9 +28,9 @@ const MyContent = () => {
   if (error) return <div className="flex items-center justify-center min-h-screen bg-gray-900 text-red-400 text-xl font-medium">{error}</div>;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white px-4 py-12 md:px-8 lg:px-16">
+    <div className="min-h-screen bg-gray-700 dark:bg-gray-900 text-white px-4 py-12 md:px-8 lg:px-16">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+        <h1 className="text-3xl  font-bold text-center mb-8 bg-gradient-to-r text-black to-purple-500 bg-clip-text ">
           My Content
         </h1>
         {videos.length === 0 ? (
