@@ -13,7 +13,6 @@ function VideoMeta() {
 
   const token = localStorage.getItem("token");
 
-  // ✅ Fetch video data (includes channel info)
   useEffect(() => {
     const fetchVideo = async () => {
       try {
@@ -32,7 +31,6 @@ function VideoMeta() {
     fetchVideo();
   }, [videoId, token]);
 
-  // ✅ Like toggle
   const handleToggleLike = async () => {
     if (!video?._id) return;
     setLiking(true);
@@ -42,7 +40,6 @@ function VideoMeta() {
         {},
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
-
       const updated = res.data.data || {};
       setVideo((prev) => ({
         ...prev,
@@ -56,11 +53,9 @@ function VideoMeta() {
     }
   };
 
-  // ✅ Subscribe toggle (calls your route: POST /api/v1/subscriptions/c/:channelId)
   const handleToggleSubscribe = async () => {
-    if (!video?.owner?._id) return; // channelId comes from video.owner._id
+    if (!video?.owner?._id) return;
     setSubscribing(true);
-
     try {
       const res = await axios.post(
         `/api/v1/subscriptions/c/${video.owner._id}`,
@@ -70,9 +65,7 @@ function VideoMeta() {
           withCredentials: true,
         }
       );
-
       const { subscribed } = res.data.data;
-
       setVideo((prev) => ({
         ...prev,
         owner: {
@@ -90,32 +83,31 @@ function VideoMeta() {
     }
   };
 
-  // ✅ Loading states
   if (loading)
     return (
-      <div className="w-[560px] h-[315px] flex items-center justify-center bg-gray-900 text-white">
+      <div className="w-full flex items-center justify-center bg-gray-900 text-white h-[200px] md:h-[315px]">
         Loading...
       </div>
     );
 
   if (!video)
     return (
-      <div className="w-[560px] h-[315px] flex items-center justify-center bg-gray-900 text-white">
+      <div className="w-full flex items-center justify-center bg-gray-900 text-white h-[200px] md:h-[315px]">
         Video not found.
       </div>
     );
- 
-return (
-    <div className="w-200 bg-[#18181b] text-white rounded border-b-4 shadow p-4 flex flex-col">
-      {/* Title and Views */}
-      <h2 className="text-xl font-semibold mb-1">{video.title}</h2>
-      <span className="text-xs text-gray-300">
+
+  return (
+    <div className="w-full bg-[#18181b] text-white rounded border-b-4 shadow p-4 flex flex-col">
+      {/* --- Title & Views --- */}
+      <h2 className="text-lg md:text-xl font-semibold mb-1">{video.title}</h2>
+      <span className="text-xs md:text-sm text-gray-300">
         {video.views} Views · {formatTimeAgo(video.createdAt)}
       </span>
 
-      {/* Owner + Buttons */}
-      <div className="flex items-center justify-between mt-3 mb-2">
-        {/* Left: Avatar + Name + Subscribers */}
+      {/* --- Owner + Actions --- */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-3 mb-2 gap-3">
+        {/* Left: Channel Info */}
         <div className="flex items-center space-x-3">
           <img
             src={video.owner?.avatar || "/default-avatar.png"}
@@ -123,20 +115,22 @@ return (
             className="w-10 h-10 rounded-full object-cover"
           />
           <div className="flex flex-col">
-            <span className="font-medium">{video.owner?.name}</span>
+            <span className="font-medium text-sm md:text-base">
+              {video.owner?.name}
+            </span>
             <span className="text-xs text-gray-400">
               {video.owner?.subscribersCount ?? 0} subscribers
             </span>
           </div>
         </div>
 
-        {/* Right: Subscribe + Like/Dislike */}
-        <div className="flex space-x-2">
+        {/* Right: Buttons */}
+        <div className="flex flex-wrap sm:flex-nowrap gap-2 justify-start sm:justify-end">
           {/* Subscribe Button */}
           <button
             onClick={handleToggleSubscribe}
             disabled={subscribing}
-            className={`px-5 py-2 rounded-lg font-medium shadow transition ${
+            className={`px-4 py-2 rounded-lg font-medium shadow transition text-sm md:text-base ${
               video.owner?.isSubscribed
                 ? "bg-red-500 text-white hover:bg-red-700"
                 : "bg-purple-400 text-black hover:bg-purple-600 hover:text-white"
@@ -153,7 +147,7 @@ return (
           <button
             onClick={handleToggleLike}
             disabled={liking}
-            className={`flex cursor-pointer items-center space-x-1 px-3 py-1 rounded transition ${
+            className={`flex items-center space-x-1 px-3 py-1 rounded transition text-sm md:text-base ${
               video.isLiked ? "bg-green-600" : "bg-gray-700 hover:bg-gray-600"
             }`}
           >
@@ -164,14 +158,14 @@ return (
           {/* Dislike Button */}
           <button
             disabled
-            className="flex cursor-pointer items-center space-x-1 px-3 py-1 rounded bg-gray-700 opacity-50"
+            className="flex items-center space-x-1 px-3 py-1 rounded bg-gray-700 opacity-50 text-sm md:text-base"
           >
             <GrDislike />
           </button>
         </div>
       </div>
 
-      {/* Description */}
+      {/* --- Description --- */}
       <p className="mt-3 text-sm text-gray-200 line-clamp-3">
         {video.description}
       </p>

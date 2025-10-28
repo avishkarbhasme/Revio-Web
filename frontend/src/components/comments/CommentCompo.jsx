@@ -16,11 +16,9 @@ function CommentCompo() {
   const [error, setError] = useState(null);
   const token = localStorage.getItem("token");
 
-  // Pagination / Show More
-  const [visibleCount, setVisibleCount] = useState(5); // initially show 5 comments
+  const [visibleCount, setVisibleCount] = useState(5);
   const COMMENTS_INCREMENT = 5;
 
-  // Fetch comments
   useEffect(() => {
     if (!videoId) return;
     setLoading(true);
@@ -45,7 +43,6 @@ function CommentCompo() {
       .finally(() => setLoading(false));
   }, [videoId, token]);
 
-  // Add comment
   const handleAddComment = (e) => {
     e.preventDefault();
     if (!newComment.trim()) return;
@@ -70,7 +67,6 @@ function CommentCompo() {
       .finally(() => setPosting(false));
   };
 
-  // Delete comment
   const handleDelete = (commentId) => {
     if (!window.confirm("Are you sure you want to delete this comment?")) return;
 
@@ -88,13 +84,11 @@ function CommentCompo() {
       });
   };
 
-  // Start editing
   const startEdit = (comment) => {
     setEditingId(comment._id);
     setEditingContent(comment.content || "");
   };
 
-  // Save edit
   const handleEditSave = (commentId) => {
     if (!editingContent.trim()) return;
 
@@ -118,64 +112,58 @@ function CommentCompo() {
       });
   };
 
-  // Toggle like/unlike
-const handleToggleCommentLike = async (commentId) => {
-  if (!commentId) return;
+  const handleToggleCommentLike = async (commentId) => {
+    if (!commentId) return;
 
-  // Trigger quick animation
-  setComments((prev) =>
-    prev.map((c) =>
-      c._id === commentId ? { ...c, isAnimating: true } : c
-    )
-  );
-
-  // Remove animation after 300ms
-  setTimeout(() => {
     setComments((prev) =>
       prev.map((c) =>
-        c._id === commentId ? { ...c, isAnimating: false } : c
+        c._id === commentId ? { ...c, isAnimating: true } : c
       )
     );
-  }, 300);
 
-  try {
-    const res = await axios.post(
-      `/api/v1/likes/toggle/d/${commentId}`,
-      {},
-      { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
-    );
+    setTimeout(() => {
+      setComments((prev) =>
+        prev.map((c) =>
+          c._id === commentId ? { ...c, isAnimating: false } : c
+        )
+      );
+    }, 300);
 
-    const updated = res.data.data || {};
+    try {
+      const res = await axios.post(
+        `/api/v1/likes/toggle/d/${commentId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
+      );
 
-    setComments((prev) =>
-  prev.map((c) => {
-    if (c._id === commentId) {
-      const liked = !c.isLiked; // toggle like status
-      const newLikesCount = liked ? (c.likesCount || 0) + 1 : (c.likesCount || 1) - 1;
-
-      return {
-        ...c,
-        isLiked: liked,
-        likesCount: newLikesCount,
-        isAnimating: false,
-      };
+      setComments((prev) =>
+        prev.map((c) => {
+          if (c._id === commentId) {
+            const liked = !c.isLiked;
+            const newLikesCount = liked
+              ? (c.likesCount || 0) + 1
+              : (c.likesCount || 1) - 1;
+            return {
+              ...c,
+              isLiked: liked,
+              likesCount: newLikesCount,
+              isAnimating: false,
+            };
+          }
+          return c;
+        })
+      );
+    } catch (err) {
+      console.error("Failed to toggle comment like:", err);
+      setError("Could not toggle like");
     }
-    return c;
-  })
-);
-  } catch (err) {
-    console.error("Failed to toggle comment like:", err);
-    setError("Could not toggle like");
-  }
-};
-
-
-
-
+  };
 
   return (
-    <section className="w-200 bg-gray-400 dark:bg-[#18181b] dark:text-black shadow p-4 flex flex-col justify-between">
-      <h2 className="text-xl text-purple-700 font-semibold mb-4">Comments</h2>
+    <section className="w-full bg-gray-400 dark:bg-[#18181b] dark:text-white shadow p-4 flex flex-col rounded-md">
+      <h2 className="text-lg md:text-xl text-purple-700 font-semibold mb-4">
+        Comments
+      </h2>
 
       {loading && <p>Loading comments...</p>}
       {error && <p className="text-red-500">{error}</p>}
@@ -184,13 +172,16 @@ const handleToggleCommentLike = async (commentId) => {
       <ul className="mb-4 space-y-4">
         {Array.isArray(comments) &&
           comments.slice(0, visibleCount).map((comment) => (
-            <li key={comment._id} className="border-b pb-2 flex flex-col gap-1">
-              <div className="flex items-center justify-between">
-                <p className="font-semibold text-black dark:text-yellow-800">
+            <li
+              key={comment._id}
+              className="border-b pb-2 flex flex-col gap-1 break-words"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                <p className="font-semibold text-black dark:text-yellow-400 text-sm md:text-base">
                   {comment.owner?.username || comment.user || "User"}
                 </p>
-                
-                <span className="text-xs dark:text-white text-black">
+
+                <span className="text-xs text-gray-600 dark:text-gray-300">
                   {new Date(comment.createdAt).toLocaleString()}
                 </span>
               </div>
@@ -201,81 +192,85 @@ const handleToggleCommentLike = async (commentId) => {
                     value={editingContent}
                     onChange={(e) => setEditingContent(e.target.value)}
                     rows={2}
-                    className="border p-1 rounded resize-none"
+                    className="border p-1 rounded resize-none text-black"
                   />
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     <button
                       onClick={() => handleEditSave(comment._id)}
-                      className="bg-green-600 dark:text-white text-black py-1 px-3 rounded text-sm"
+                      className="bg-green-600 text-white py-1 px-3 rounded text-sm"
                     >
                       Save
                     </button>
                     <button
                       onClick={() => setEditingId(null)}
-                      className="bg-gray-400 dark:text-white text-black py-1 px-3 rounded text-sm"
+                      className="bg-gray-400 text-black py-1 px-3 rounded text-sm"
                     >
                       Cancel
                     </button>
                   </div>
                 </div>
               ) : (
-                <p className="text-black dark:text-white">{comment.content}</p>
+                <p className="text-sm md:text-base text-black dark:text-white break-words">
+                  {comment.content}
+                </p>
               )}
 
-              <div className="flex gap-3 mt-1 text-sm items-center">
+              {/* Like / Edit / Delete Buttons */}
+              <div className="flex flex-wrap gap-3 mt-1 text-sm items-center">
                 <button
                   onClick={() => handleToggleCommentLike(comment._id)}
-                  className="text-black dark:tetx-white flex items-center gap-1"
+                  className="flex items-center gap-1 cursor-pointer"
                 >
                   <span
-                    className={`cursor-pointer transition-transform duration-300 ${
+                    className={`transition-transform duration-300 ${
                       comment.isAnimating ? "scale-125" : "scale-100"
                     }`}
-                  ><FcLike size={22} /></span> 
-                  <span className="border-gray-950 w-10 border"> {comment.likesCount || 0}</span>
+                  >
+                    <FcLike size={20} />
+                  </span>
+                  <span>{comment.likesCount || 0}</span>
                 </button>
 
                 <button
                   onClick={() => startEdit(comment)}
-                  className="text-blue-500 cursor-pointer hover:underline"
+                  className="text-blue-500 hover:text-blue-700 flex items-center gap-1"
                 >
-                  <CiEdit size={22} />
+                  <CiEdit size={20} /> Edit
                 </button>
+
                 <button
                   onClick={() => handleDelete(comment._id)}
-                  className="text-red-500 cursor-pointer hover:underline"
+                  className="text-red-500 hover:text-red-700 flex items-center gap-1"
                 >
-                  <MdDeleteOutline size={22} />
+                  <MdDeleteOutline size={20} /> Delete
                 </button>
               </div>
             </li>
           ))}
       </ul>
 
-      {/* Show More Comments button */}
       {visibleCount < comments.length && (
         <button
           onClick={() => setVisibleCount(visibleCount + COMMENTS_INCREMENT)}
-          className="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 mb-4"
+          className="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 self-center mb-4"
         >
           Show More Comments
         </button>
       )}
 
-      {/* Add new comment */}
       <form onSubmit={handleAddComment} className="flex flex-col space-y-2">
         <textarea
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           rows={3}
           placeholder="Write a comment..."
-          className="border p-2 rounded resize-none dark:text-white text-black"
+          className="border p-2 rounded resize-none text-black dark:text-white"
           disabled={posting}
         />
         <button
           type="submit"
           disabled={posting || !newComment.trim()}
-          className="bg-purple-600 cursor-pointer text-white py-2 rounded disabled:opacity-50"
+          className="bg-purple-600 cursor-pointer text-white py-2 rounded disabled:opacity-50 hover:bg-purple-700"
         >
           {posting ? "Posting..." : "Add Comment"}
         </button>
