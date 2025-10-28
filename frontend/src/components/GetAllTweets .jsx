@@ -1,32 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
-
-const UserTweets = ({ userId }) => {
+const GetAllTweets = () => {
   const [tweets, setTweets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [newTweet, setNewTweet] = useState('');
   const [editingTweetId, setEditingTweetId] = useState(null);
   const [editingContent, setEditingContent] = useState('');
+  const [userId, setUserId] = useState(null);
 
-  // Fetch tweets
+  // Fetch logged-in user ID first
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get('/api/v1/users/current-user', { withCredentials: true });
+        setUserId(res.data.data._id);
+      } catch (err) {
+        setError(err.response?.data?.message || err.message || "Failed to get user");
+        setLoading(false);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  // Fetch all tweets
   useEffect(() => {
     const fetchTweets = async () => {
       try {
-        const res = await axios.get(`/api/v1/tweets/user/${userId}`, { withCredentials: true });
+        const res = await axios.get('/api/v1/tweets/all', { withCredentials: true });
         setTweets(res.data.data || []);
       } catch (err) {
         setError(err.response?.data?.message || err.message || "Failed to fetch tweets");
       } finally {
         setLoading(false);
       }
-    };
+   };
     fetchTweets();
-  }, [userId]);
+  }, []); // no userId needed
 
-  // Create Tweet
+
+  // Create tweet
   const handleCreateTweet = async () => {
     if (!newTweet.trim()) return;
     try {
@@ -38,7 +52,7 @@ const UserTweets = ({ userId }) => {
     }
   };
 
-  // Update Tweet
+  // Update tweet
   const handleUpdateTweet = async (tweetId) => {
     if (!editingContent.trim()) return;
     try {
@@ -51,7 +65,7 @@ const UserTweets = ({ userId }) => {
     }
   };
 
-  // Delete Tweet
+  // Delete tweet
   const handleDeleteTweet = async (tweetId) => {
     if (!window.confirm("Are you sure you want to delete this tweet?")) return;
     try {
@@ -62,36 +76,24 @@ const UserTweets = ({ userId }) => {
     }
   };
 
-// Toggle Like (without updating likesCount)
-const handleToggleLike = async (tweetId) => {
-  try {
-    // Make sure the URL matches your backend route
-    const res = await axios.post(`/api/v1/likes/toggle/t/${tweetId}`, {}, {
-      withCredentials: true,
-    });
-
-    // Only update isLiked status
-    const { isLiked } = res.data.data;
-
-    setTweets(prevTweets =>
-      prevTweets.map(t =>
-        t._id === tweetId ? { ...t, isLiked } : t
-      )
-    );
-  } catch (err) {
-    console.error("Toggle like error:", err);
-    alert(err.response?.data?.message || err.message || "Failed to toggle like. Please check the endpoint or try again later.");
-  }
-};
-
+  // Toggle like
+  const handleToggleLike = async (tweetId) => {
+    try {
+      const res = await axios.post(`/api/v1/likes/toggle/t/${tweetId}`, {}, { withCredentials: true });
+      const { isLiked } = res.data.data;
+      setTweets(prev => prev.map(t => t._id === tweetId ? { ...t, isLiked } : t));
+    } catch (err) {
+      alert(err.response?.data?.message || err.message || "Failed to toggle like");
+    }
+  };
 
   if (loading) return <div className="flex items-center justify-center min-h-screen text-white text-xl animate-pulse">Loading...</div>;
   if (error) return <div className="flex items-center justify-center min-h-screen text-red-400 text-xl">{error}</div>;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white px-4 py-12 md:px-8 lg:px-16">
+    <div className="min-h-screen bg-gray-900 mt-15 text-white px-4 py-12 md:px-8 lg:px-16">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">User Tweets</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">My Tweets</h1>
 
         {/* Create Tweet */}
         <div className="mb-8 bg-gray-800 p-6 rounded-xl shadow-lg">
@@ -116,11 +118,11 @@ const handleToggleLike = async (tweetId) => {
                 {/* Avatar & Username */}
                 <div className="flex items-center mb-4">
                   <img
-                    src={tweet.ownerDetails?.avatar }
+                    src={tweet.ownerDetails?.avatar || ''}
                     alt={tweet.ownerDetails?.username || 'User Avatar'}
                     className="w-10 h-10 rounded-full mr-3 object-cover"
                   />
-                  <span className="font-semibold text-green-400">@{tweet.ownerDetails?.username || tweet.owner?.username || 'Unknown User'}</span>
+                  <span className="font-semibold text-green-400">@{tweet.ownerDetails?.username || 'Unknown User'}</span>
                 </div>
 
                 {/* Tweet Content */}
@@ -140,7 +142,7 @@ const handleToggleLike = async (tweetId) => {
                   <>
                     <p className="text-white text-lg mb-4">{tweet.content}</p>
 
-                    {/* Likes & Retweets */}
+                    {/* Likes */}
                     <div className="flex items-center justify-between text-gray-400 text-sm mb-3">
                       <span>{new Date(tweet.createdAt).toLocaleDateString()}</span>
                       <div className="flex space-x-4">
@@ -150,7 +152,6 @@ const handleToggleLike = async (tweetId) => {
                         >
                           ❤️ {tweet.likesCount || 0}
                         </button>
-                        
                       </div>
                     </div>
 
@@ -158,7 +159,6 @@ const handleToggleLike = async (tweetId) => {
                     <div className="flex space-x-2 mt-2">
                       <button onClick={() => { setEditingTweetId(tweet._id); setEditingContent(tweet.content); }} className="bg-yellow-500 px-4 py-2 rounded-lg hover:bg-yellow-600 text-black">Edit</button>
                       <button onClick={() => handleDeleteTweet(tweet._id)} className="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700">Delete</button>
-                      
                     </div>
                   </>
                 )}
@@ -171,4 +171,4 @@ const handleToggleLike = async (tweetId) => {
   );
 };
 
-export default UserTweets;
+export default GetAllTweets;

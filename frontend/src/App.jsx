@@ -21,6 +21,7 @@ import HelpPage from "./pages/HelpPage.jsx";
 import ReportPage from "./pages/ReportPage.jsx";
 import Setting from "./components/Support/Setting.jsx";
 import SettingPage from "./pages/SettingPage.jsx";
+import AllTweetPage from "./pages/AllTweetPage.jsx";
 
 
 function App() {
@@ -61,6 +62,13 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+          path="/home/all-tweets"
+          element = {
+            <ProtectedRoute>
+              <AllTweetPage/>
+            </ProtectedRoute>
+          }/>
 
           <Route
             path="/home/my-profile/edit/:username"

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaHome, FaThumbsUp, FaHistory, FaVideo, FaQuestionCircle, FaCog, FaBars } from "react-icons/fa";
+import { FaHome, FaThumbsUp, FaHistory, FaVideo, FaUsers, FaQuestionCircle, FaCog, FaBars } from "react-icons/fa";
 import { MdOutlineBugReport } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
@@ -36,6 +36,8 @@ const Sidebar = () => {
           <SidebarItem icon={<FaThumbsUp />} label="Liked Videos" onClick={() => handleNavigate("/home/likeVideos")} />
           <SidebarItem icon={<FaHistory />} label="History" onClick={() => handleNavigate("/home/watch-history")} />
           <SidebarItem icon={<FaVideo />} label="My Content" onClick={() => handleNavigate("/home/my-content")} />
+          {/* New Sidebar Item */}
+          <SidebarItem icon={<FaUsers />} label="All Tweets" onClick={() => handleNavigate("/home/all-tweets")} />
         </div>
 
         {/* Bottom section - ALWAYS at bottom */}

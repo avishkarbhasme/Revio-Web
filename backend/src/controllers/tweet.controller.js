@@ -123,6 +123,48 @@ const getUserTweets = asyncHandler(async (req, res) => {
 
 })
 
+const getAllTweets = asyncHandler(async (req, res) => {
+  const tweets = await Tweet.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "owner",
+        foreignField: "_id",
+        as: "ownerDetails",
+        pipeline: [{ $project: { username: 1, avatar: 1 } }],
+      },
+    },
+    {
+      $lookup: {
+        from: "likes",
+        localField: "_id",
+        foreignField: "tweet",
+        as: "likeDetails",
+        pipeline: [{ $project: { likedBy: 1 } }],
+      },
+    },
+    {
+      $addFields: {
+        likesCount: { $size: "$likeDetails" },
+        ownerDetails: { $arrayElemAt: ["$ownerDetails", 0] },
+        isLiked: {
+          $cond: {
+            if: { $in: [new mongoose.Types.ObjectId(req.user?._id), "$likeDetails.likedBy"] },
+            then: true,
+            else: false,
+          },
+        },
+      },
+    },
+    { $sort: { createdAt: -1 } },
+    { $project: { content: 1, ownerDetails: 1, likesCount: 1, createdAt: 1, isLiked: 1 } },
+  ]);
+
+  return res.status(200).json({ status: 200, data: tweets, message: "Tweets fetched successfully" });
+});
+
+
+
 const updateTweet = asyncHandler(async (req, res) => {
     //TODO: update tweet
 
@@ -199,6 +241,7 @@ const deleteTweet = asyncHandler(async (req, res) => {
 export {
     createTweet,
     getUserTweets,
+    getAllTweets,
     updateTweet,
     deleteTweet
 }

@@ -5,6 +5,7 @@ import {
     deleteTweet,
     updateTweet,
     getUserTweets,
+    getAllTweets,
 } from "../controllers/tweet.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 
@@ -15,5 +16,6 @@ router.use(verifyJWT, upload.none()); // Apply verifyJWT middleware to all route
 router.route("/create").post(createTweet);
 router.route("/user/:userId").get(getUserTweets);
 router.route("/:tweetId").patch(updateTweet).delete(deleteTweet);
+router.route("/all").get(getAllTweets)
 
 export default router;
