@@ -1,28 +1,57 @@
 # Revio
 
-Revio is a modern web application for sharing and exploring video content. It allows users to upload videos, interact with content through likes, comments, and reports, and provides an admin panel for moderation and management.
+Built a full-stack MERN application that allows video sharing, playlist creation, likes, comment interactions and user interaction. Integrated JWT authentication, admin panel, and report/support modules. Designed a clean, responsive, modern interface using React and Tailwind CSS, and implemented chatbot assistance to enhance user engagement and utilized MongoDB Atlas for secure cloud data storage along with Cloudinary for efficient image and video management.
 
 ---
+# Screenshots
+## Home
+![Revio Screenshot](assets/home.png)
+
+## Login
+![Revio Screenshot](assets/login.png)
+
+## Register 
+![Revio Screenshot](assets/register.png)
+
+## Main Content
+![Revio Screenshot](assets/main.png)
+
+## Chatbot
+![Revio Screenshot](assets/chatbot.png)
+
+## Dashboard
+![Revio Screenshot](assets/dashboard.png)
+
+## Profile
+![Revio Screenshot](assets/profile.png)
+
+## Help
+![Revio Screenshot](assets/help.png)
+
+## Report
+![Revio Screenshot](assets/report.png)
+
+## Support
+![Revio Screenshot](assets/support.png)
+
+
 
 ## Features
 
 ### User Features
 - User registration and login.
 - Upload, view, and manage videos.
+- Chatbot.
 - Like, comment, and share videos.
 - Report inappropriate content.
 - Support page for user queries.
 
-### Admin Features
-- Admin login (static credentials).
-- View all user reports and support messages.
-- Manage user accounts (delete users, block content, etc.).
-- Full access to site moderation and analytics.
 
 ### Technical Features
 - Frontend: React, TailwindCSS
 - Backend: Node.js, Express
 - Database: MongoDB
+- Image & Video Management: cloudinary
 - Authentication: JWT (for users)
 - RESTful APIs for seamless frontend-backend integration
 
@@ -32,7 +61,8 @@ Revio is a modern web application for sharing and exploring video content. It al
 
 ### Prerequisites
 - Node.js v18+  
-- MongoDB (local or cloud)
+- MongoDB Atlas 
+- Express.js
 
 ### Backend Setup
 1. Navigate to backend directory:
@@ -61,16 +91,18 @@ Revio is a modern web application for sharing and exploring video content. It al
     ```
 2. Install dependencies:
     ```bash
-    npm install
+    npm install and npm vite
     ```
 3. Start the frontend server:
     ```bash
-    npm start
+    npm run dev
     ```
 
 ---
 
 ## Folder Structure
+
+
 Revio/
 │
 ├── backend/ # Node.js backend
@@ -88,13 +120,6 @@ Revio/
 │
 └── README.md # Project documentation
 
-
-
-
----
-
 ## Contact
 
 For support or questions, reach out via support page on the website or email at `timepasstalkies12@gmail.com`.
-
-
