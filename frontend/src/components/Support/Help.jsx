@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     question: "How do I manage Videos?",
-    answer: "Go to Admin Dashboad > You can edit,delete,upload, publised  videos .",
+    answer: "Go to Admin Dashboad > You can edit,delete,upload, publised  videos .",
   },
 ];
 
@@ -31,7 +31,7 @@ function Help() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-700 dark:bg-gray-900 p-6 flex justify-center">
+    <div className="min-h-screen bg-gray-700 dark:bg-gray-900 mt-16  px-4 sm:px-6 md:px-12 py-8 flex justify-center">
       <div className="w-full max-w-3xl space-y-6">
         <h1 className="text-3xl font-bold text-white text-center mb-6">Help & FAQ</h1>
 
@@ -42,13 +42,20 @@ function Help() {
           >
             <button
               onClick={() => toggleFAQ(index)}
-              className="w-full text-left p-4 flex justify-between items-center text-white font-semibold hover:bg-gray-800"
+              className="w-full text-left p-4 flex justify-between items-center text-white font-semibold hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 transition"
+              aria-expanded={openIndex === index}
+              aria-controls={`faq-${index}-content`}
+              id={`faq-${index}-header`}
             >
-              <span>{faq.question}</span>
-              <span className="text-purple-500">{openIndex === index ? "-" : "+"}</span>
+              <span className="text-sm sm:text-base">{faq.question}</span>
+              <span className="text-purple-500 text-xl select-none">{openIndex === index ? "−" : "+"}</span>
             </button>
             {openIndex === index && (
-              <div className="p-4 text-gray-300 bg-gray-800 border-t border-gray-700">
+              <div
+                id={`faq-${index}-content`}
+                aria-labelledby={`faq-${index}-header`}
+                className="p-4 text-gray-300 bg-gray-800 border-t border-gray-700 text-sm sm:text-base"
+              >
                 {faq.answer}
               </div>
             )}

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import { MdImageNotSupported } from "react-icons/md";
-import { MdOutlineCloudUpload } from "react-icons/md";
+import { MdImageNotSupported, MdOutlineCloudUpload } from "react-icons/md";
 import UpdateInfo from "./UpdateInfo";
 import UpdateChannelInfo from "./UpdateChannelInfo";
 import UpdatePassword from "./UpdatePassword";
@@ -13,7 +12,7 @@ function EditCompo() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("personal");
-   const [uploading, setUploading] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -33,8 +32,7 @@ function EditCompo() {
       .finally(() => setLoading(false));
   }, [username]);
 
-
-    // ✅ Handle Avatar Update
+  // ✅ Handle Avatar Update
   const handleAvatarUpdate = async () => {
     const token = localStorage.getItem("token");
     const fileInput = document.createElement("input");
@@ -58,7 +56,6 @@ function EditCompo() {
           withCredentials: true,
         });
 
-        // ✅ Update UI with new avatar from backend response
         const updatedUser = res.data.data;
         setProfile((prev) => ({
           ...prev,
@@ -77,81 +74,81 @@ function EditCompo() {
   };
 
   // ✅ Handle Cover Image Update
-const handleCoverImageUpdate = async () => {
-  const token = localStorage.getItem("token");
-  const fileInput = document.createElement("input");
-  fileInput.type = "file";
-  fileInput.accept = "image/*";
+  const handleCoverImageUpdate = async () => {
+    const token = localStorage.getItem("token");
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "image/*";
 
-  fileInput.onchange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    fileInput.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
 
-    const formData = new FormData();
-    formData.append("coverImage", file);
+      const formData = new FormData();
+      formData.append("coverImage", file);
 
-    try {
-      setUploading(true);
-      const res = await axios.patch("/api/v1/users/cover-image", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-        withCredentials: true,
-      });
+      try {
+        setUploading(true);
+        const res = await axios.patch("/api/v1/users/cover-image", formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        });
 
-      // ✅ Safely access updated user
-      const updatedUser = res?.data?.data;
-      if (!updatedUser) throw new Error("Invalid response from server");
+        const updatedUser = res?.data?.data;
+        if (!updatedUser) throw new Error("Invalid response from server");
 
-      setProfile((prev) => ({
-        ...prev,
-        coverImage: updatedUser.coverImage || prev.coverImage,
-      }));
+        setProfile((prev) => ({
+          ...prev,
+          coverImage: updatedUser.coverImage || prev.coverImage,
+        }));
 
-      alert("Cover image updated successfully!");
-    } catch (error) {
-      console.error("Error updating cover image:", error);
-      alert("Failed to update cover image");
-    } finally {
-      setUploading(false);
-    }
+        alert("Cover image updated successfully!");
+      } catch (error) {
+        console.error("Error updating cover image:", error);
+        alert("Failed to update cover image");
+      } finally {
+        setUploading(false);
+      }
+    };
+
+    fileInput.click();
   };
 
-  fileInput.click();
-};
-
-  
   if (loading) return <div className="text-center text-white">Loading...</div>;
-  if (!profile) return <div className="text-center text-red-500">Profile not found</div>;
+  if (!profile)
+    return <div className="text-center text-red-500">Profile not found</div>;
 
   return (
-    <main className="min-h-screen ml-64 pt-15 border">
+    <main className="min-h-screen ml-64 pt-15 border max-sm:ml-0 max-sm:px-0">
       {/* Cover Image */}
       <div
-  className="h-56 w-full bg-cover bg-center relative group cursor-pointer"
-  onClick={handleCoverImageUpdate}
-  style={{
-    backgroundImage: profile.coverImage ? `url(${profile.coverImage})` : "none",
-    backgroundColor: !profile.coverImage ? "#333" : "transparent",
-  }}
->
-  {/* Default if no cover */}
-  {!profile.coverImage && (
-    <div className="h-56 w-full flex items-center justify-center bg-gray-200">
-      <MdImageNotSupported size={48} color="#888" />
-    </div>
-  )}
+        className="h-56 w-full bg-cover bg-center relative group cursor-pointer max-sm:h-56"
+        onClick={handleCoverImageUpdate}
+        style={{
+          backgroundImage: profile.coverImage
+            ? `url(${profile.coverImage})`
+            : "none",
+          backgroundColor: !profile.coverImage ? "#333" : "transparent",
+        }}
+      >
+        {!profile.coverImage && (
+          <div className="h-56 w-full flex items-center justify-center bg-gray-200">
+            <MdImageNotSupported size={48} color="#888" />
+          </div>
+        )}
 
-  {/* Upload overlay on hover */}
-  <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-    <MdOutlineCloudUpload size={40} color="#fff" />
-  </div>
-</div>
+        {/* Upload overlay on hover */}
+        <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <MdOutlineCloudUpload size={40} color="#fff" />
+        </div>
+      </div>
 
       {/* Avatar */}
       <div
-        className="absolute left-75 top-78 z-20 group/avatar cursor-pointer"
+        className="absolute left-75 top-78 z-20 group/avatar cursor-pointer max-sm:left-1/2 max-sm:top-57 max-sm:-translate-x-1/2"
         onClick={(e) => {
           e.stopPropagation();
           handleAvatarUpdate();
@@ -170,9 +167,11 @@ const handleCoverImageUpdate = async () => {
       </div>
 
       {/* Channel Info Card */}
-      <div className="bg-gray-900 px-10 py-8 mt-0 relative dark:bg-black flex flex-col md:flex-row items-center justify-between">
-        <div className="md:ml-36 mt-8 md:mt-0 flex-1">
-          <h1 className="text-xl font-semibold text-white">{profile.fullName}</h1>
+      <div className="bg-gray-900 px-10 py-8 mt-0 relative dark:bg-black flex flex-col md:flex-row items-center justify-between max-sm:px-5">
+        <div className="md:ml-36 mt-8 md:mt-0 flex-1 text-center md:text-left">
+          <h1 className="text-xl font-semibold text-white">
+            {profile.fullName}
+          </h1>
           <p className="text-lg text-gray-300">@{profile.username}</p>
           <p className="text-sm text-gray-400 mt-1">
             {profile.subcribersCount || 0} Subscribers {" • "}
@@ -188,8 +187,8 @@ const handleCoverImageUpdate = async () => {
       </div>
 
       {/* Navigation Tabs */}
-      <div className="bg-gray-800 dark:bg-gray-900 w-full px-10">
-        <div className="flex space-x-10 border-b border-gray-700">
+      <div className="bg-gray-800 dark:bg-gray-900 w-full px-10 max-sm:px-5">
+        <div className="flex flex-wrap justify-center space-x-10 border-b border-gray-700 max-sm:space-x-4">
           <button
             className={`py-3 font-semibold ${
               activeTab === "personal"
@@ -201,7 +200,7 @@ const handleCoverImageUpdate = async () => {
             Personal Information
           </button>
           <button
-            className={`py-3 ${
+            className={`py-3 font-semibold ${
               activeTab === "channel"
                 ? "text-purple-300 border-b-2 border-purple-300"
                 : "text-gray-400"
@@ -211,7 +210,7 @@ const handleCoverImageUpdate = async () => {
             Channel Information
           </button>
           <button
-            className={`py-3 ${
+            className={`py-3 font-semibold ${
               activeTab === "password"
                 ? "text-purple-300 border-b-2 border-purple-300"
                 : "text-gray-400"
@@ -222,8 +221,10 @@ const handleCoverImageUpdate = async () => {
           </button>
         </div>
 
-        {/* Conditionally Render Content Based on Active Tab */}
-        {activeTab === "personal" && <UpdateInfo profile={profile} setProfile={setProfile} />}
+        {/* Conditional Tab Content */}
+        {activeTab === "personal" && (
+          <UpdateInfo profile={profile} setProfile={setProfile} />
+        )}
         {activeTab === "channel" && <UpdateChannelInfo profile={profile} />}
         {activeTab === "password" && <UpdatePassword />}
       </div>

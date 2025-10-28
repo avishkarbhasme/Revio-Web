@@ -39,7 +39,7 @@ const UserSubscribed = ({ subscriberId }) => {
 
   return (
     <div className="container mx-auto dark:bg-black px-4 py-8 bg-gray-900 min-h-[calc(100vh-200px)]">
-      <h1 className="text-3xl font-bold text-white mb-8">Channel Subscribers</h1>
+      <h1 className="text-3xl font-bold text-blue-400 mb-8">Channel Subscribers</h1>
       {subscribers.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16">
           <span className="bg-purple-200 p-4 rounded-full mb-4">

@@ -9,8 +9,9 @@ function MyContentPage() {
     <div>
         <UserNavbar/>
         <Sidebar/>
-        <div className='ml-63 mt-15'
-        ><MyContent/></div>
+        <div className="ml-0 md:ml-64 pt-16 mt-4 px-3 md:px-6 min-h-screen bg-gray-700 dark:bg-gray-900">
+        <MyContent/>
+        </div>
         <Chatbot/>
     </div>
   )

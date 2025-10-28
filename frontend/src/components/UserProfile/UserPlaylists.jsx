@@ -247,7 +247,7 @@ const UserPlaylists = ({ userId }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {playlists.map((playlist) => {
             const thumbnailSrc =
-              playlist.videos?.thumbnail?.url ||
+              playlist.thumbnail?.url ||
               (typeof playlist.thumbnail === "string" && playlist.thumbnail) ||
               playlist.videos?.[0]?.thumbnail?.url ||
               "/default-thumbnail.png";

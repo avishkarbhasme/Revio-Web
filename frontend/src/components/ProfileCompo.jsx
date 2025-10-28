@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { MdImageNotSupported } from "react-icons/md";
-import UserVideos from "../components/UserProfile/UserVideos.jsx"; // Import UserVideos component
-import UserPlaylists from "./UserProfile/UserPlaylists.jsx";
+import UserVideos from "../components/UserProfile/UserVideos.jsx";
+import Playlist from "./Playlist/Playlist.jsx"; 
 import UserTweets from "./UserProfile/UserTweets.jsx";
 import UserSubscribed from "./UserProfile/UserSubscribed.jsx";
 
 function ProfileCompo() {
-  const { username } = useParams(); // get from URL
+  const { username } = useParams();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [subscribing, setSubscribing] = useState(false);
@@ -32,7 +32,6 @@ function ProfileCompo() {
       .finally(() => setLoading(false));
   }, [username]);
 
-  // Handler for Subscribe/Unsubscribe button click
   const handleSubscribeToggle = () => {
     if (!profile) return;
     const token = localStorage.getItem("token");
@@ -43,9 +42,7 @@ function ProfileCompo() {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       })
-      .then((res) => {
-        setProfile(res.data.data); // update profile with new subscription data
-      })
+      .then((res) => setProfile(res.data.data))
       .catch((err) => {
         console.error("Subscription toggle failed", err);
       })
@@ -53,12 +50,13 @@ function ProfileCompo() {
   };
 
   if (loading) return <div className="text-center text-white">Loading...</div>;
-  if (!profile) return <div className="text-center text-red-500">Profile not found</div>;
+  if (!profile)
+    return <div className="text-center text-red-500">Profile not found</div>;
 
   return (
-    <main className="min-h-screen ml-64 pt-15 border">
+    <main className="min-h-screen ml-64 pt-15 border max-sm:ml-0 max-sm:px-0">
       {/* Cover Image */}
-      <div className="h-56 w-full bg-cover bg-center relative">
+      <div className="h-56 w-full bg-cover bg-center relative max-sm:h-56">
         {profile.coverImage ? (
           <div
             className="h-56 w-full bg-cover bg-center"
@@ -69,8 +67,9 @@ function ProfileCompo() {
             <MdImageNotSupported size={48} color="#888" />
           </div>
         )}
+
         {/* Avatar */}
-        <div className="absolute left-10 top-62 z-20">
+        <div className="absolute left-10 top-62 z-20 max-sm:left-1/2 max-sm:top-44 max-sm:-translate-x-1/2">
           <img
             src={profile.avatar || "/default-avatar.png"}
             alt={profile.username}
@@ -79,9 +78,9 @@ function ProfileCompo() {
         </div>
       </div>
 
-      {/* Channel Info Card */}
-      <div className="bg-gray-900 px-10 py-8 mt-0 relative dark:bg-black flex flex-col md:flex-row items-center justify-between">
-        <div className="md:ml-36 mt-8 md:mt-0 flex-1">
+      {/* Channel Info */}
+      <div className="bg-gray-900 px-10 py-8 mt-0 relative dark:bg-black flex flex-col md:flex-row items-center justify-between max-sm:px-5">
+        <div className="md:ml-36 mt-8 md:mt-0 flex-1 text-center md:text-left">
           <h1 className="text-xl font-semibold text-white">{profile.fullName}</h1>
           <p className="text-lg text-gray-300">@{profile.username}</p>
           <p className="text-sm text-gray-400 mt-1">
@@ -106,9 +105,9 @@ function ProfileCompo() {
         </button>
       </div>
 
-      {/* Navigation Tabs */}
-      <div className="bg-gray-800 dark:bg-gray-900 w-full px-10">
-        <div className="flex space-x-10 border-b border-gray-700">
+      {/* Tabs */}
+      <div className="bg-gray-800 dark:bg-gray-900 w-full px-10 max-sm:px-5">
+        <div className="flex flex-wrap justify-center space-x-10 border-b border-gray-700 max-sm:space-x-4">
           <button
             className={`py-3 font-semibold ${
               activeTab === "videos"
@@ -120,7 +119,7 @@ function ProfileCompo() {
             Videos
           </button>
           <button
-            className={`py-3 ${
+            className={`py-3 font-semibold ${
               activeTab === "playlist"
                 ? "text-purple-300 border-b-2 border-purple-300"
                 : "text-gray-400"
@@ -130,7 +129,7 @@ function ProfileCompo() {
             Playlist
           </button>
           <button
-            className={`py-3 ${
+            className={`py-3 font-semibold ${
               activeTab === "tweets"
                 ? "text-purple-300 border-b-2 border-purple-300"
                 : "text-gray-400"
@@ -140,7 +139,7 @@ function ProfileCompo() {
             Tweets
           </button>
           <button
-            className={`py-3 ${
+            className={`py-3 font-semibold ${
               activeTab === "subscribed"
                 ? "text-purple-300 border-b-2 border-purple-300"
                 : "text-gray-400"
@@ -151,11 +150,13 @@ function ProfileCompo() {
           </button>
         </div>
 
-        {/* Conditionally Render Content Based on Active Tab */}
-  {activeTab === "videos" && <UserVideos username={username} />}
-  {activeTab === "playlist" && <UserPlaylists userId={profile._id} />}
-  {activeTab === "tweets" && <UserTweets userId={profile._id} />}
-  {activeTab === "subscribed" && <UserSubscribed subscriberId={profile._id} />}
+        {/* Tab Content */}
+        {activeTab === "videos" && <UserVideos username={username} />}
+        {activeTab === "playlist" && <Playlist userId={profile._id} />}
+        {activeTab === "tweets" && <UserTweets userId={profile._id} />}
+        {activeTab === "subscribed" && (
+          <UserSubscribed subscriberId={profile._id} />
+        )}
       </div>
     </main>
   );

@@ -28,7 +28,7 @@ const UserVideos = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 dark:bg-black bg-gray-900 min-h-[calc(100vh-200px)]">
-      <h1 className="text-3xl font-bold text-white mb-8">Channel Videos</h1>
+      <h1 className="text-3xl font-bold text-blue-400 mb-8">Channel Videos</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {videos.map((video) => (
           <div 

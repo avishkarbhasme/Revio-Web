@@ -1,11 +1,11 @@
 import React from "react";
 import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaFacebook } from "react-icons/fa";
-import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa6";
+import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900  text-gray-300 py-8">
-      <div className="container mx-auto px-10 flex flex-direction: row justify-between">
+    <footer className="bg-gray-900 text-gray-300 py-8">
+      <div className="container mx-auto px-6 sm:px-10 flex flex-col sm:flex-row justify-between gap-8">
 
         {/* Contact Section */}
         <div>
@@ -23,16 +23,19 @@ const Footer = () => {
           </ul>
         </div>
 
-
         {/* Social Section */}
         <div>
           <h2 className="text-xl font-semibold mb-3 text-white">Follow Us</h2>
           <div className="flex gap-4 mt-2">
-            <a target="_blank" href="https://github.com/avishkarbhasme" className="hover:text-white"><FaGithub size={22} /></a>
-            <a target="_blank" href="https://www.linkedin.com/in/avishkar-bhasme-438307265?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B0ivcf4%2FdQXaBc5PnRu1CjQ%3D%3D" 
-            className="hover:text-white"><FaLinkedin size={22} /></a>
-            <a target="_blank" href="https://www.facebook.com/profile.php?id=100015474286776" 
-            className="hover:text-white"><FaFacebook size={22} /></a>
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/avishkarbhasme" className="hover:text-white">
+              <FaGithub size={22} />
+            </a>
+            <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/avishkar-bhasme-438307265" className="hover:text-white">
+              <FaLinkedin size={22} />
+            </a>
+            <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/profile.php?id=100015474286776" className="hover:text-white">
+              <FaFacebook size={22} />
+            </a>
           </div>
         </div>
       </div>

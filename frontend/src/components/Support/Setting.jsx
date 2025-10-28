@@ -11,7 +11,7 @@ function Setting() {
         <div className="mb-6 flex items-center justify-between">
           <span className="text-lg">Theme</span>
           <div className="text-black">
-          <ThemeToggle  />
+            <ThemeToggle />
           </div>
         </div>
 
@@ -19,14 +19,17 @@ function Setting() {
         <div className="mb-4">
           <h2 className="text-lg font-semibold mb-2">Contact Information</h2>
           <p>
-            <span className="font-medium">Email:</span> timepasstalkies12@gmail.com
+            <span className="font-medium">Email:</span>{" "}
+            <a href="mailto:timepasstalkies12@gmail.com" className="underline hover:text-purple-400">
+              timepasstalkies12@gmail.com
+            </a>
           </p>
           <p>
             <span className="font-medium">Phone:</span> 738555418
           </p>
         </div>
 
-        {/* Other settings can go here */}
+        {/* Other Settings */}
         <div className="mt-4">
           <h2 className="text-lg font-semibold mb-2">Other Settings</h2>
           <p className="text-gray-400 underline">More settings coming soon...</p>

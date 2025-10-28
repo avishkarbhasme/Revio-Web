@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
 import { formatDuration, formatTimeAgo } from "../../utils/Helper.js";
 
 const WatchHistory = () => {
@@ -41,12 +41,12 @@ const WatchHistory = () => {
   }
 
   if (videos.length === 0) {
-    return <p className="text-center text-red-400 mt-20">No watch history found.</p>;
+    return <p className="text-center text-red-400 mt-20 text-xl sm:text-4xl">No watch history found.</p>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-700 dark:bg-gray-900 py-10 px-5">
-      <h1 className="text-3xl font-bold text-black dark:text-white mb-6 text-center">
+    <div className="min-h-screen bg-gray-700 dark:bg-gray-900 py-6 px-2 sm:px-6 w-full">
+      <h1 className="text-2xl sm:text-3xl font-bold text-white mb-6 text-center">
         Watch History
       </h1>
 
@@ -62,47 +62,48 @@ const WatchHistory = () => {
         </select>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+      {/* Video Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6 w-full">
         {videos.map((video) => (
           <div
             key={video._id}
-            className="bg-gray-200 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-200"
+            className="bg-gray-200 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-200 w-full"
           >
             <img
               src={video.thumbnail?.url}
               alt={video.title}
-              className="w-full h-44 object-cover"
+              className="w-full h-36 sm:h-44 md:h-48 object-cover"
             />
-            <div className="p-4">
-              <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100 mb-1 line-clamp-2">
+            <div className="p-3 sm:p-4">
+              <h3 className="font-bold text-md sm:text-lg text-gray-900 dark:text-gray-100 mb-1 line-clamp-2">
                 {video.title}
               </h3>
               <div className="flex items-center space-x-2 mb-1">
                 <img
                   src={video.owner?.avatar}
                   alt={video.owner?.username}
-                  className="w-7 h-7 rounded-full border object-cover"
+                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border object-cover"
                 />
                 <Link
                   to={`/home/profile/${video.owner?.username}`}
-                  className="text-xs underline text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
+                  className="text-xs sm:text-sm underline text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
                 >
                   @{video.owner?.username}
                 </Link>
               </div>
-              <p className="text-xs text-gray-500 mb-2">
+              <p className="text-xs sm:text-sm text-gray-500 mb-2">
                 {video.views} views &bull; {formatTimeAgo(video.createdAt)}
               </p>
-              <p className="line-clamp-2 text-sm text-gray-600 dark:text-gray-200 mb-3">
+              <p className="line-clamp-2 text-sm sm:text-base text-gray-600 dark:text-gray-200 mb-3">
                 {video.description}
               </p>
               <div className="flex justify-between items-center">
-                <span className="text-xs text-gray-600 dark:text-gray-300">
+                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
                   {formatDuration(Math.round(video.duration * 100) / 100)}
                 </span>
                 <button
                   onClick={() => navigate(`/watchNow/v/${video._id}`)}
-                  className="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700"
+                  className="bg-blue-600 text-white px-3 py-1 rounded text-xs sm:text-sm hover:bg-blue-700"
                 >
                   Watch Now
                 </button>

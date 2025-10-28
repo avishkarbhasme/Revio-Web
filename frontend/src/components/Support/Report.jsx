@@ -15,7 +15,6 @@ function Report() {
       setSuccess("");
       return;
     }
-
     try {
       const res = await axios.post("/api/v1/reports/create", { type, reason, description });
       setSuccess(res.data.message);
@@ -38,21 +37,28 @@ function Report() {
         {success && <div className="bg-green-600 text-white p-2 mb-4 rounded">{success}</div>}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <label className="text-white font-semibold">Report Type</label>
+          <label className="text-white font-semibold" htmlFor="type-select">
+            Report Type
+          </label>
           <select
+            id="type-select"
             value={type}
             onChange={(e) => setType(e.target.value)}
-            className="p-3 rounded bg-gray-800 text-white border border-gray-600"
+            className="p-3 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
           >
             <option value="video">Video</option>
             <option value="comment">Comment</option>
           </select>
 
-          <label className="text-white font-semibold">Reason <span className="text-red-400">*</span></label>
+          <label className="text-white font-semibold" htmlFor="reason-select">
+            Reason <span className="text-red-400">*</span>
+          </label>
           <select
+            id="reason-select"
             value={reason}
             onChange={(e) => setReason(e.target.value)}
-            className="p-3 rounded bg-gray-800 text-white border border-gray-600"
+            className="p-3 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            required
           >
             <option value="">Select a reason</option>
             <option value="spam">Spam</option>
@@ -62,18 +68,22 @@ function Report() {
             <option value="other">Other</option>
           </select>
 
-          <label className="text-white font-semibold">Description <span className="text-red-400">*</span></label>
+          <label className="text-white font-semibold" htmlFor="description-textarea">
+            Description <span className="text-red-400">*</span>
+          </label>
           <textarea
+            id="description-textarea"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows={5}
-            placeholder="Paste the url of video or username, Provide more details... "
-            className="p-3 rounded bg-gray-800 text-white border border-gray-600 resize-none"
+            placeholder="Paste the url of video or username, Provide more details..."
+            className="p-3 rounded bg-gray-800 text-white border border-gray-600 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500"
+            required
           />
 
           <button
             type="submit"
-            className="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 rounded mt-2"
+            className="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 rounded mt-2 transition-colors duration-200"
           >
             Submit Report
           </button>

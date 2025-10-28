@@ -13,9 +13,9 @@ function Support() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation
     if (!name || !email || !subject || !message) {
       setError("Please fill in all fields.");
+      setSuccess("");
       return;
     }
 
@@ -30,14 +30,12 @@ function Support() {
         subject,
         message,
       });
-
       setSuccess(res.data?.message || "Your message has been sent successfully!");
       setName("");
       setEmail("");
       setSubject("");
       setMessage("");
     } catch (err) {
-      // Handle network error or server error
       if (!err.response) {
         setError("Network error. Please try again.");
       } else {
@@ -49,26 +47,20 @@ function Support() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-700 dark:bg-gray-900 flex justify-center items-center p-4">
-      <div className="bg-[#1a1a1a] p-8 rounded-lg shadow-lg w-full max-w-lg border border-gray-700">
-        <h1 className="text-2xl font-bold text-white mb-6 text-center">
-          Support
-        </h1>
+    <div className="min-h-screen bg-gray-700 dark:bg-gray-900 flex justify-center mt-12 items-center p-4 min-w-full">
+      <div className="w-full max-w-lg bg-[#1a1a1a] p-8 rounded-lg shadow-lg border border-gray-700">
+        <h1 className="text-2xl font-bold mb-6 text-center text-white">Support</h1>
 
-        {error && (
-          <div className="bg-red-600 text-white p-2 mb-4 rounded">{error}</div>
-        )}
-        {success && (
-          <div className="bg-green-600 text-white p-2 mb-4 rounded">{success}</div>
-        )}
+        {error && <div className="bg-red-600 text-white p-2 mb-4 rounded">{error}</div>}
+        {success && <div className="bg-green-600 text-white p-2 mb-4 rounded">{success}</div>}
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
           <input
             type="text"
             placeholder="Your Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="p-3 rounded bg-gray-800 text-white border border-gray-600"
+            className="p-3 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 w-full"
           />
 
           <input
@@ -76,7 +68,7 @@ function Support() {
             placeholder="Your Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="p-3 rounded bg-gray-800 text-white border border-gray-600"
+            className="p-3 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 w-full"
           />
 
           <input
@@ -84,7 +76,7 @@ function Support() {
             placeholder="Subject"
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            className="p-3 rounded bg-gray-800 text-white border border-gray-600"
+            className="p-3 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 w-full"
           />
 
           <textarea
@@ -92,14 +84,14 @@ function Support() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             rows={5}
-            className="p-3 rounded bg-gray-800 text-white border border-gray-600 resize-none"
+            className="p-3 rounded bg-gray-800 text-white border border-gray-600 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 w-full"
           />
 
           <button
             type="submit"
             disabled={loading}
-            className={`bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 rounded mt-2 ${
-              loading ? "cursor-not-allowed opacity-70" : ""
+            className={`bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 rounded mt-2 transition-all duration-200 w-full ${
+              loading ? "opacity-70 cursor-not-allowed" : ""
             }`}
           >
             {loading ? "Sending..." : "Send Message"}
